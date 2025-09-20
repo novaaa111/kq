@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>website apa ni??</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
+      overflow-x: hidden;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* 🎈 Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      animation: float 10s infinite ease-in;
+      opacity: 0.8;
+    }
+
+    .balloon:after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 25px;
+      background: #555;
+      transform: translateX(-50%);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg);}
+      100% { transform: translateY(-110vh) rotate(20deg);}
+    }
+
+    /* ❤️ Floating hearts & stars */
+    .float {
+      position: absolute;
+      font-size: 20px;
+      animation: rise 8s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes rise {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Countdown + content */
+    .countdown, .content {
+      text-align: center;
+      color: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      max-width: 900px;
+      width: 100%;
+      transition: opacity 1s ease, visibility 1s ease;
+      z-index: 2;
+      margin: 0 auto;
+    }
+
+    .countdown {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 600px;
+      width: 90%;
+      z-index: 10;
+    }
+
+    .countdown h1 { font-size: 2rem; margin-bottom: 20px; }
+    #timer { font-size: 2.5rem; font-weight: bold; letter-spacing: 3px; }
+
+    .content { opacity: 0; visibility: hidden; }
+    .content.active { opacity: 1; visibility: visible; animation: fadeIn 2s ease; }
+
+    .content h1 { font-size: 2.5rem; margin-bottom: 15px; }
+    .content p { font-size: 1.2rem; margin: 15px 0; line-height: 1.6; }
+
+    /* Typewriter effect */
+.typewriter {
+  display: inline-block;
+  border-right: 3px solid #fff;
+  white-space: pre-wrap;   /* boleh wrap dan ikut \n */
+  overflow: hidden;
+  text-align: center;      /* center text */
+  margin-top: 40px;        /* turun sikit ke bawah */
+  line-height: 1.6;        /* spacing cantik */
+  font-size: 1.2rem;
+}
+
+    /* Gallery */
+    .gallery {
+      margin-top: 25px;
+      position: relative;
+      height: 400px;
+    }
+    .gallery img {
+      position: absolute;
+      width: 150px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transition: transform 0.4s ease;
+    }
+    .gallery img:hover { transform: scale(1.1) rotate(2deg); }
+    .img1 { top: 0; left: 5%; transform: rotate(-5deg);}
+    .img2 { top: 50px; right: 10%; transform: rotate(8deg);}
+    .img3 { top: 120px; left: 40%; transform: rotate(-3deg);}
+    .img4 { bottom: 20px; left: 15%; transform: rotate(4deg);}
+    .img5 { bottom: 0; right: 20%; transform: rotate(-6deg);}
+
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    /* 💌 Surprise popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 500px;
+      z-index: 20;
+      .popup-img {
+  max-width: 50%;
+  margin-top: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+    }
+    .popup.active { display: block; }
+    .popup h2 { color: #ff6b81; }
+    .popup button { margin-top: 20px; padding: 10px 20px; border: none; background: #ff6b81; color: #fff; border-radius: 10px; cursor: pointer; }
+
+    .music-btn {
+      margin-top: 15px;
+      padding: 8px 15px;
+      border: none;
+      background: #ff6b81;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🎈 Random balloons -->
+  <div id="balloons"></div>
+
+  <!-- ❤️ Floating hearts & stars -->
+  <div id="extras"></div>
+
+  <!-- Countdown -->
+  <div class="countdown" id="countdown">
+    <h1>Countdown to Your Special Day 🎉</h1>
+    <div id="timer">Loading...</div>
+  </div>
+
+  <!-- Hidden content -->
+  <div class="content" id="content">
+    <h1>Happy Birthday to Special One 🎂✨</h1>
+    <p id="typewriter" class="typewriter"></p>
+
+    <!-- 5 scattered images -->
+    <div class="gallery">
+      <img src="kq5.jpg" alt="Memory 1" class="img1">
+      <img src="kq2.jpg" alt="Memory 2" class="img2">
+      <img src="kq4.jpg" alt="Memory 3" class="img3">
+      <img src="kq6.jpg" alt="Memory 4" class="img4">
+      <img src="kq1.jpg" alt="Memory 5" class="img5">
+    </div>
+
+    <button class="music-btn" id="musicBtn">Pause Music 🎵</button>
+    <br>
+    <button class="music-btn" onclick="openPopup()">Click me 💌</button>
+  </div>
+
+  <!-- Surprise popup -->
+  <!-- Surprise popup -->
+<div class="popup" id="popup">
+  <h2>💌 Surprise Message 💌</h2>
+  <p>
+    One more time, Happy Birthday, Kamila Qaira ❤️<br>
+    You are the gorgeous and never be replaced.<br>
+    Thank you for everything.
+  </p>
+  <!-- 🖼️ Tambah gambar -->
+  <img src="kq7.jpg" alt="Special Memory" class="popup-img">
+  <button onclick="closePopup()">Close</button>
+</div>
+
+
+
+  <!-- 🎵 Background music -->
+  <audio id="bgMusic" loop>
+    <source src="kq 20min.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    // 🎈 Create colorful balloons
+    const balloonColors = ["#ff6b81", "#feca57", "#48dbfb", "#1dd1a1", "#ff9ff3"];
+    const balloonsContainer = document.getElementById("balloons");
+    for(let i=0; i<8; i++){
+      let b = document.createElement("div");
+      b.className = "balloon";
+      b.style.left = Math.random()*90 + "%";
+      b.style.animationDuration = (8 + Math.random()*5) + "s";
+      b.style.background = balloonColors[Math.floor(Math.random()*balloonColors.length)];
+      balloonsContainer.appendChild(b);
+    }
+
+    // ✨ Extra floating hearts & stars
+    const extras = document.getElementById("extras");
+    const symbols = ["❤️","⭐","💖","✨"];
+    for(let i=0;i<15;i++){
+      let el = document.createElement("div");
+      el.className = "float";
+      el.innerText = symbols[Math.floor(Math.random()*symbols.length)];
+      el.style.left = Math.random()*100 + "%";
+      el.style.animationDuration = (5+Math.random()*5) + "s";
+      el.style.fontSize = (15+Math.random()*25) + "px";
+      extras.appendChild(el);
+    }
+
+    // 🎵 Background music
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    musicBtn.addEventListener("click", ()=>{
+      if(music.paused){ music.play(); musicBtn.innerText="Pause Music 🎵"; }
+      else{ music.pause(); musicBtn.innerText="Play Music 🎵"; }
+    });
+
+
+    // 💌 Popup
+    function openPopup(){ document.getElementById("popup").classList.add("active"); }
+    function closePopup(){ document.getElementById("popup").classList.remove("active"); }
+
+    // ⌨️ Typewriter effect
+    const text = "Selamat hari lahir, Kamila. Awak bukan sekadar hadir, tapi merawat semula luka yang tak mampu saya tanggung.\n\nSemoga setiap langkah awak penuh dengan kebahagiaan, setiap doa awak dimakbulkan, dan setiap impian awak tercapai.\n\nSelamat Happy Birthday, Kamila 💖 You are better than you think.";
+    let i=0;
+    function typeWriter(){
+      if(i<text.length){
+        document.getElementById("typewriter").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter,40);
+      }
+    }
+
+    // ⏱️ Countdown ke 3 November tahun ini
+const targetDate = new Date("Nov 3, " + new Date().getFullYear() + " 00:00:00").getTime();
+const timer = document.getElementById("timer");
+const countdown = document.getElementById("countdown");
+const content = document.getElementById("content");
+
+const interval = setInterval(()=>{
+  const current = new Date().getTime();
+  const distance = targetDate - current;
+
+  if(distance > 0){
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+    timer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  } else {
+    clearInterval(interval);
+    countdown.style.display="none";
+    content.classList.add("active");
+
+  // 🎵 Cuba autoplay bila countdown habis
+  music.play().catch(()=>{
+    musicBtn.innerText = "Play Music 🎵"; // kalau block, user boleh tekan manual
+  });
+
+  typeWriter();
+  confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
+}
+
+    },1000);
+  </script>
+</body>
+</html>
